@@ -5,22 +5,9 @@ TO_TIMESTAMP(STARTED_AT) AS STARTED_AT,
 DATE(TO_TIMESTAMP(STARTED_AT)) AS DATE_STARTED_AT,
 HOUR(TO_TIMESTAMP(STARTED_AT)) AS HOUR_STARTED_AT,
 
-CASE
-WHEN dayname(TO_TIMESTAMP(STARTED_AT)) in ('Sat', 'Sun')
-THEN 'Weekend'
-ELSE 'Business Day'
-END AS Day_Type,
+{{weekend_checker('STARTED_AT')}},
 
-CASE 
-WHEN MONTH(TO_TIMESTAMP(STARTED_AT)) in (12, 1, 2)
-THEN 'Winter'
-WHEN MONTH(TO_TIMESTAMP(STARTED_AT)) in (2, 3, 4) 
-THEN 'Spring'
-WHEN MONTH(TO_TIMESTAMP(STARTED_AT)) in (5, 6, 7)
-THEN 'Summer'
-ELSE
-'Fall'
-END AS Season
+{{season_checker('STARTED_AT')}}
 
 FROM
 {{ source('demo', 'bike') }}
