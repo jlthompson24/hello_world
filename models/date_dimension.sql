@@ -10,7 +10,7 @@ HOUR(TO_TIMESTAMP(STARTED_AT)) AS HOUR_STARTED_AT,
 {{season_checker('STARTED_AT')}}
 
 FROM
-{{ source('demo', 'bike') }}
+{{ ref('stg_bike') }}
 WHERE STARTED_AT <> 'started_at'
 
 )
